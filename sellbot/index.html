@@ -1,0 +1,62 @@
+<html>
+
+<head>
+<script type = "text/javascript" src = "js/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+    </script>
+
+</head>
+
+<body>
+    <h3>BitPay <> Poynt Callback</h3>
+
+    <p><b>Business ID</p></b>
+    <i>passed to node/index.js to get live json data</i>
+    <div id = "businessId"></div>
+    <hr>
+
+    <p><b>JWT Code</p></b>
+    <div id = "jwtCode"></div>
+    <hr>
+    <p><b>Context</p></b>
+    <div id = "context"></div>
+    <hr>
+    <p><b>_GA</p></b>
+    <div id = "_ga"></div>
+
+    <hr>
+
+    <p><b>Business Info (Poynt GET call from NodeJS Ajax)</p></b>
+    <pre id = "businessInfo"></pre>
+
+    <script type = "text/javascript">
+        var businessId = getUrlParameter("businessId")
+        var jwtCode = getUrlParameter("code")
+        var context = getUrlParameter("context")
+        var _ga = getUrlParameter("_ga")
+        $("#businessId").html(businessId)
+        $("#jwtCode").html(jwtCode)
+        $("#context").html(context)
+        $("#_ga").html(_ga)
+      
+        $.get("http://local.poynt.com:3000/poynt?businessId=" + businessId, function(businessInfo, status){
+            console.log(businessInfo)
+            $("#businessInfo").html(JSON.stringify(businessInfo,undefined, 2))
+        });
+    </script>
+</body>
+</html>

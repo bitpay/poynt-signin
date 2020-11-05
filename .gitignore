@@ -1,0 +1,5 @@
+.DS_Store
+sellbot/.DS_Store
+sellbot/node_modules
+sellbot/keypair.pem
+sellbot/.env
