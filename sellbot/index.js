@@ -7,6 +7,8 @@ var cors = require('cors')
 
 
 app.use(cors())
+app.use(express.json())
+
 
 var poynt = require('poynt')({
     env: process.env.ENDPOINT,
@@ -34,6 +36,29 @@ app.get('/poynt', (req, res) => {
         }
     });
 })
+
+app.post('/poynt_webook', (req, res) => {
+    var data = req.body
+    var businessId =data.businessId
+    //console.log(businessId)
+    poynt.getBusiness({
+        businessId: businessId
+        //businessId: 'c446c47c-b993-48ab-afcb-b03e11183a2b'
+    }, function (err, business) {
+        if (err) {
+            console.log(err)
+            res.send(err);
+        } else {
+            console.log(business)
+            sendSF(business)
+            res.json(business);
+        }
+    });
+})
+
+function sendSF(business){
+    console.log('SENDING TO SALES FORCE',business)
+}
 
 app.listen(port, () => {
     console.log(`Poynt listening at http://local.poynt.com:${port}`)
