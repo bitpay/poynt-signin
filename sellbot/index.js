@@ -38,12 +38,31 @@ app.get('/poynt', (req, res) => {
 })
 
 app.post('/poynt_webook', (req, res) => {
+    /*sample incoming payload from the iPN webhook*/
+    /*
+    {
+            "acquirer": "",
+            "businessId": "c446c47c-b993-48ab-afcb-b03e11183a2b",
+            "businessUrl": "",
+            "description": "",
+            "email": "",
+            "industryType": "",
+            "legalName": "",
+            "mcc": "",
+            "mockProcessor": "",
+            "phone": "",
+            "processor": "",
+            "status": "",
+            "streetAddress": "",
+            "timezone": "",
+            "type": ""
+}
+*/
+
     var data = req.body
     var businessId =data.businessId
-    //console.log(businessId)
     poynt.getBusiness({
         businessId: businessId
-        //businessId: 'c446c47c-b993-48ab-afcb-b03e11183a2b'
     }, function (err, business) {
         if (err) {
             console.log(err)
